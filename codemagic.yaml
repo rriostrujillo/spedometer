@@ -1,0 +1,36 @@
+workflows:
+  android-workflow:
+    name: Build Android APK
+    max_build_duration: 60
+    environment:
+      flutter: false
+      node: "18"
+      npm: "10"
+      java: "17"
+    scripts:
+      # Install npm dependencies
+      - name: Install dependencies
+        script: |
+          cd app
+          npm install
+          
+      # Build the web app with Vite
+      - name: Build web app
+        script: |
+          cd app
+          npm run build
+          
+      # Sync Capacitor
+      - name: Sync Capacitor
+        script: |
+          cd app
+          npx cap sync android
+          
+      # Build Android APK
+      - name: Build Android APK
+        script: |
+          cd app/android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+    artifacts:
+      - app/android/app/build/outputs/**/*.apk
