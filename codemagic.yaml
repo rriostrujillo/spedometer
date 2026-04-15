@@ -5,7 +5,7 @@ workflows:
     environment:
       node: "22"
       npm: "10"
-      java: "17"
+      java: "21"
     scripts:
       # Install npm dependencies
       - name: Install dependencies
